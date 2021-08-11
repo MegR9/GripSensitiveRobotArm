@@ -1,0 +1,67 @@
+#include "BluetoothSerial.h"
+#include <ESP32Servo.h>
+// init Class:
+BluetoothSerial ESP_BT;
+
+// init PINs: assign any pin on ESP32
+Servo servo1;
+Servo servo2;
+Servo servo3;
+Servo servo4;
+int servo1pin = 27;
+int servo2pin = 26;
+int servo3pin = 25;
+int servo4pin = 33;
+int incoming;
+
+void setup() {
+  Serial.begin(19200);
+  ESP_BT.begin("ESP32_Control"); //Name of your Bluetooth interface -> will show up on your phone
+  servo1.attach(27);
+  servo2.attach(26);
+  servo3.attach(25);
+  servo4.attach(33);
+
+}
+
+void loop() {
+
+  // -------------------- Receive Bluetooth signal ----------------------
+  if (ESP_BT.available())
+  {
+    incoming = ESP_BT.read();
+    Serial.println(incoming);
+    if (incoming == 10) {
+      servo1.write(90);
+      delay(100);
+    }
+    if (incoming == 11) {
+      servo1.write(0);
+      delay(100);
+    }
+    if (incoming == 20) {
+      servo2.write(90);
+      delay(100);
+    }
+    if (incoming == 21) {
+      servo2.write(0);
+      delay(100);
+    }
+    if (incoming == 30) {
+      servo3.write(90);
+      delay(100);
+    }
+    if (incoming == 31) {
+      servo3.write(0);
+      delay(100);
+    }
+      if (incoming == 40) {
+      servo4.write(90);
+      delay(100);
+  }
+    if (incoming == 41) {
+      servo4.write(0);
+      delay(100);
+    }
+  }
+}
